@@ -27,22 +27,22 @@ public class Data {
         location = new Location("Apeldoorn");
         locationMap.put(location.getName(), location);
 
-        ///////////////
-        Route amersfoortSchipholAirport = new Route(locationMap.get("Amersfoort"), LocalTime.of(7, 0));
-        amersfoortSchipholAirport.addStopOver(locationMap.get("Hilversum"), LocalTime.of(7,15), LocalTime.of(7,16));
-        amersfoortSchipholAirport.addStopOver(locationMap.get("Amsterdam zuid"), LocalTime.of(7,31), LocalTime.of(7,31));
-        amersfoortSchipholAirport.addEndPoint(locationMap.get("Schiphol airport"), LocalTime.of(7,46));
+        {
+            ///////////////
+            Route route = new Route(locationMap.get("Amersfoort"), LocalTime.of(7, 0));
+            route.addStopOver(locationMap.get("Hilversum"), LocalTime.of(7, 15), LocalTime.of(7, 16));
+            route.addStopOver(locationMap.get("Amsterdam zuid"), LocalTime.of(7, 31), LocalTime.of(7, 31));
+            route.addEndPoint(locationMap.get("Schiphol airport"), LocalTime.of(7, 46));
+            addRoute(route);
+        }
 
-        Route schipholAirportAmersfoort = new Route(locationMap.get("Schiphol airport"), LocalTime.of(7,0));
-        schipholAirportAmersfoort.addStopOver(locationMap.get("Amsterdam zuid"), LocalTime.of(7,15), LocalTime.of(7,16));
-        schipholAirportAmersfoort.addStopOver(locationMap.get("Hilversum"), LocalTime.of(7,31), LocalTime.of(7,32));
-        schipholAirportAmersfoort.addEndPoint(locationMap.get("Amersfoort"), LocalTime.of(7,46));
-
-
-
-
-        addRoute(amersfoortSchipholAirport);
-        addRoute(schipholAirportAmersfoort);
+        {
+            Route route = new Route(locationMap.get("Schiphol airport"), LocalTime.of(7, 0));
+            route.addStopOver(locationMap.get("Amsterdam zuid"), LocalTime.of(7, 15), LocalTime.of(7, 16));
+            route.addStopOver(locationMap.get("Hilversum"), LocalTime.of(7, 31), LocalTime.of(7, 32));
+            route.addEndPoint(locationMap.get("Amersfoort"), LocalTime.of(7, 46));
+            addRoute(route);
+        }
     }
     private void addRoute(Route route)
     {
