@@ -151,7 +151,6 @@ public class Reisplanner extends JFrame implements ActionListener
             }
 
             // Zorgt ervoor dat er een response komt als de zoek button ingedrukt wordt.
-
             zoeken.addActionListener(new ActionListener(){
                 @Override
                 public void actionPerformed(ActionEvent search) {
