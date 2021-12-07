@@ -16,6 +16,10 @@ public class StopOver extends Location
         this.arrival = arrival;
         this.departure = departure;
     }
+
+    public LocalTime getDeparture() {
+        return departure;
+    }
 }
 
 
