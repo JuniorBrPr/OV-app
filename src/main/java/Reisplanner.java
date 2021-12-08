@@ -4,6 +4,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 public class Reisplanner extends JPanel implements ActionListener
 {
@@ -32,24 +34,10 @@ public class Reisplanner extends JPanel implements ActionListener
         zoeken.setText("test");
     }
 
-    Reisplanner() {
-        zoeken = new JButton("Zoeken");
+    Reisplanner(Locale locale) {
+        ResourceBundle bundle = ResourceBundle.getBundle("bundle" ,locale);
+        zoeken = new JButton(bundle.getString("zoeken"));
         label = new JLabel();
-
-        JButton Login;
-
-        Login = new JButton("Login");
-
-
-//        Login.setBounds(10, 100, 80, 25);
-//        Login.addActionListener(new ActionListener() {
-//            public void actionPerformed(ActionEvent e) {
-//                Login l = new Login();
-//                l.setVisible(true);
-//                l.setBounds(400, 200, 600, 300);
-//            }
-//        });
-
 
         {
             // comboboxen DOOR: Niels van Gortel
@@ -61,30 +49,15 @@ public class Reisplanner extends JPanel implements ActionListener
             JPanel Transport = new JPanel();
             Transport.setBounds(10, 3, 10, 25);
 
-            // vertrektijden combobox
-//                LocalTime tijden[] = {
-//                        LocalTime.of(0, 00),
-//                        LocalTime.of(8, 00), LocalTime.of(8, 30), LocalTime.of(9, 00),
-//                        LocalTime.of(9, 30), LocalTime.of(10, 00), LocalTime.of(10, 30),
-//                        LocalTime.of(11, 00),
-//                        LocalTime.of(11, 30), LocalTime.of(12, 00), LocalTime.of(12, 30),
-//                        LocalTime.of(13, 00), LocalTime.of(13, 30), LocalTime.of(14, 00),
-//                        LocalTime.of(14, 30), LocalTime.of(15, 00), LocalTime.of(15, 30),
-//                        LocalTime.of(16, 00), LocalTime.of(16, 30), LocalTime.of(17, 00),
-//                        LocalTime.of(17, 30), LocalTime.of(17, 30), LocalTime.of(18, 30),
-//                        LocalTime.of(19, 00), LocalTime.of(19, 30), LocalTime.of(20, 00),
-//                        LocalTime.of(20, 30), LocalTime.of(21, 00), LocalTime.of(21, 30),
-//                        LocalTime.of(22, 30)
-//                };
+
             timeBox = new JComboBox(new Object[]{"00:00", "08:00",  "08:30", "09:00", "09:30", "10:00", "10:30", "11:00", "11:30", "12:00"});
-            // JComboBox<Object> timeBox = new JComboBox<Object>(tijden);
             timeBox.setBounds(100, 200, 100, 25);
 
             add(comboBoxPanel);
 
             // Zet het keuze menu van de vertreklocaties
-            vertrekBox = new JComboBox(new Object[]{"Vertreklocatie", "Amsterdam", "Rotterdam", "Utrecht", "Den haag", "Amersfoort", "Schiphol airport"});
-            aankomstBox = new JComboBox(new Object[]{"Aankomstlocatie", "Amsterdam", "Rotterdam", "Utrecht", "Den haag", "Amersfoort", "Schiphol airport"});
+            vertrekBox = new JComboBox(new Object[]{bundle.getString("vertrekLocatie"), "Amsterdam", "Rotterdam", "Utrecht", "Den haag", "Amersfoort", "Schiphol airport"});
+            aankomstBox = new JComboBox(new Object[]{bundle.getString("aankomstLocatie"), "Amsterdam", "Rotterdam", "Utrecht", "Den haag", "Amersfoort", "Schiphol airport"});
 
 
             // maakt het panel aan
@@ -92,15 +65,12 @@ public class Reisplanner extends JPanel implements ActionListener
             panel.setBorder(BorderFactory.createEmptyBorder(10, 0, 30, 30));
             panel.setLayout(new GridLayout(6, 0));
             setSize(400, 400);
-//            setLocationRelativeTo(null);
-//            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             setLayout(new FlowLayout());
 
-
             //sets the choice menu of the transportation
-            JRadioButton train = new JRadioButton("Trein");
-            JRadioButton Tram = new JRadioButton("Tram");
-            JRadioButton Bus = new JRadioButton("Bus");
+            JRadioButton train = new JRadioButton(bundle.getString("trein"));
+            JRadioButton Tram = new JRadioButton(bundle.getString("tram"));
+            JRadioButton Bus = new JRadioButton(bundle.getString("bus"));
 
 
             // makes sure that one of the buttons can be selected
@@ -108,18 +78,6 @@ public class Reisplanner extends JPanel implements ActionListener
             group.add(train);
             group.add(Bus);
             group.add(Tram);
-
-//            // sets the button to go back to the main screen
-//            Home = new JButton("Home");
-//            Home.addActionListener(new ActionListener() {
-//                public void actionPerformed(ActionEvent e) {
-//                    HomeGui l = new HomeGui();
-//                    l.setBounds(400,200,600,300);
-//                    l.setVisible(true);
-//                    dispose();
-//                }
-
-//            });
 
             // Voegt attributen toe aan het panel.
             Transport.add(train);
@@ -134,12 +92,6 @@ public class Reisplanner extends JPanel implements ActionListener
             add(label);
             add(panel, BorderLayout.CENTER);
 
-
-//            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//            frame.setTitle("OvApp");
-//            frame.pack();
-
-
             setVisible(false);
         }
 
@@ -153,7 +105,7 @@ public class Reisplanner extends JPanel implements ActionListener
                 String departureTimeSearch = (String)timeBox.getSelectedItem();
                 stringToLocalTime = LocalTime.parse(departureTimeSearch);
 
-                reisAdvies.setText("U wilt reizen naar " + arrivalSearch + " vanuit " + departureSearch + " rond de tijd " + stringToLocalTime);
+                reisAdvies.setText(bundle.getString("wiltReizenNaar")+ " " + arrivalSearch + " " + bundle.getString("vanuit") + " " + departureSearch + " " + bundle.getString("rondTijd") + " " + stringToLocalTime);
                 add(reisAdvies);
                 reisAdvies.setBounds(50, 150, 300, 50);
             }

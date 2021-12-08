@@ -35,7 +35,7 @@ public class HomeGui extends JFrame {
 
         JPanel loginScreen = new Login().getLoginScreen(locale);
 
-        JPanel reisplannerScreenTest = new Reisplanner();
+        JPanel reisplannerScreenTest = new Reisplanner(locale);
 
 
         Home = new JButton("Home");
