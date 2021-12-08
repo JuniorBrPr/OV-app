@@ -171,7 +171,7 @@ public class Login
         b1 = new JButton(bundle.getString("bevestig"));
 
         t1.setBounds(100,60,90,20);
-        t2.setBounds(100,90,120,20);
+        t2.setBounds(100,90,90,20);
         b1.setBounds(100, 100, 80, 30);
 
         l3 = new JLabel(bundle.getString("registratie"));

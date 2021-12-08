@@ -81,4 +81,23 @@ public class Route {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    public LocalTime getDeparture(){return stopOvers.get(0).getDeparture();}
+
+    public LocalTime getDeparture(Location location)
+    {
+        for (var e: stopOvers)
+        {
+            if (e.getName().equals(location.getName()))
+            {
+                return e.getDeparture();
+            }
+        }
+        return null;
+    }
+
+    public LocalTime getArrival()
+    {
+        return stopOvers.get(stopOvers.size() -1).getArrival();
+    }
+}
 }
