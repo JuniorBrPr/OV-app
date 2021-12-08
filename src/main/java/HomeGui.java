@@ -24,7 +24,6 @@ public class HomeGui extends JFrame {
         setVisible(true);
         add(homescreen, BorderLayout.CENTER);
 
-
         Account = new JButton("Account");
         homescreen.add(Account);
 
@@ -34,8 +33,7 @@ public class HomeGui extends JFrame {
         Taal = new JButton(bundle.getString("taal"));
         homescreen.add(Taal);
 
-        JPanel loginScreen = new Login().getLoginScreen();
-
+        JPanel loginScreen = new Login().getLoginScreen(locale);
 
         JPanel reisplannerScreenTest = new Reisplanner();
 
@@ -56,7 +54,6 @@ public class HomeGui extends JFrame {
                 Home.setVisible(false);
                 repaint();
             }
-
         });
 
         Account.addActionListener(new ActionListener() {
@@ -89,11 +86,6 @@ public class HomeGui extends JFrame {
                 repaint();
             }
         });
-
-    }
-
-    public void actionPerformed(ActionEvent e) {
-
     }
 }
 

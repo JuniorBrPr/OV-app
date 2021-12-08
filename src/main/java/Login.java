@@ -3,6 +3,8 @@ import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
 import java.io.FileWriter;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 
 // makes the class for SignUp
@@ -14,11 +16,13 @@ public class Login
     private JButton b1, b2;
     private JLabel l1, l2;
     private JPanel loginScreen;
-    private JPanel signUpScreen = SignUp();
+    private JPanel signUpScreen;
     private JPanel loginScreenView;
 
 
-    public JPanel getLoginScreen(){
+    public JPanel getLoginScreen(Locale locale){
+        ResourceBundle bundle = ResourceBundle.getBundle("bundle", locale);
+        signUpScreen = SignUp(locale);
         loginScreenView = new JPanel();
         loginScreenView.setSize(400, 400);
         loginScreenView.setLayout(new FlowLayout());
@@ -39,8 +43,8 @@ public class Login
         // makes the textfield and buttons
         t1 = new JTextField(40);
         t2 = new JPasswordField(40);
-        b1 = new JButton("Inloggen");
-        b2 = new JButton("Registreren");
+        b1 = new JButton(bundle.getString("inloggen"));
+        b2 = new JButton(bundle.getString("registreren"));
 
         // set the size of the button and the textfield
         t1.setBounds(100,60,90,20);
@@ -84,7 +88,7 @@ public class Login
                 if(matched){
                     //Yet to add
                 }else{
-                    l2.setText("Verkeerde gebruikersnaam of wachtwoord");
+                    l2.setText(bundle.getString("verkeerdeGegevens"));
                 }
 
                 /*if(t1.getText().toString().equals("admin") && t2.getText().toString().equals("admin"))
@@ -114,10 +118,12 @@ public class Login
         return loginScreenView;
     }
 
-    public JPanel SignUp()  {
+    public JPanel SignUp(Locale locale)  {
         JTextField t1, t2;
         JButton b1;
         JLabel l3;
+        ResourceBundle bundle = ResourceBundle.getBundle("bundle", locale);
+
         JPanel signUpScreenView = new JPanel();
         signUpScreenView.setLayout(new GridLayout(0,1));
         signUpScreenView.setSize(400, 300);
@@ -128,13 +134,13 @@ public class Login
 
         t1 = new JTextField(40);
         t2 = new JPasswordField(40);
-        b1 = new JButton("bevestig");
+        b1 = new JButton(bundle.getString("bevestig"));
 
         t1.setBounds(100,60,90,20);
         t2.setBounds(100,90,120,20);
         b1.setBounds(100, 100, 80, 30);
 
-        l3 = new JLabel("Registratie");
+        l3 = new JLabel(bundle.getString("registratie"));
         l3.setFont(new Font("Arial", Font.BOLD, 30));
         l3.setForeground(Color.BLUE);
         l3.setBounds(120, 10, 300, 30);
@@ -148,7 +154,7 @@ public class Login
                     fw.write(t1.getText() + "\t" + t2.getText() + "\n");
                     fw.close();
                     Frame f = new JFrame();
-                    JOptionPane.showMessageDialog(f, "account aangemaakt");
+                    JOptionPane.showMessageDialog(f, bundle.getString("accountAangemaakt"));
                     signUpScreenView.setVisible(false);
                     loginScreen.setVisible(true);
                 } catch (Exception e) {
@@ -164,12 +170,4 @@ public class Login
         return signUpScreenView;
     }
 }
-
-
-
-
-
-
 // sets the class and the size of the application
-
-
