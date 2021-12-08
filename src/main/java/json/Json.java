@@ -31,7 +31,7 @@ public class Json {
         }
     }
 
-    public int  login(String username, String password){
+    public int login(String username, String password){
         int userId = 0;
         try {
             ObjectMapper mapper = new ObjectMapper();

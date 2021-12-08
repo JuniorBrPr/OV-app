@@ -1,3 +1,5 @@
+package screens;
+
 import json.Json;
 import json.User;
 
@@ -50,8 +52,8 @@ public class Login
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-        //set the label Login with a font and a color: Niels van Gortel
-        l1 = new JLabel("Login");
+        //set the label login with a font and a color: Niels van Gortel
+        l1 = new JLabel(bundle.getString("inloggen"));
         l1.setFont(new Font("Arial",Font.BOLD,30));
         l1.setForeground(Color.BLUE);
         l1.setBounds(120,10,300,65);
