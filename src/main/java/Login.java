@@ -15,7 +15,7 @@ public class Login
     private JLabel l1, l2;
     private JPanel loginScreen;
     private JPanel signUpScreen = SignUp();
-    JPanel loginScreenView;
+    private JPanel loginScreenView;
 
 
     public JPanel getLoginScreen(){

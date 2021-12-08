@@ -29,15 +29,18 @@ public class HomeGui extends JFrame {
         homescreen.add(Taal);
 
         JPanel loginScreen = new Login().getLoginScreen();
-        add(loginScreen,BorderLayout.CENTER);
+
 
         JPanel reisplannerScreenTest = new Reisplanner();
-        add(reisplannerScreenTest);
+
 
         Home = new JButton("Home");
         Home.setBounds(100,60,120,20);
         Home.setVisible(false);
         add(Home, BorderLayout.NORTH);
+
+        add(loginScreen,BorderLayout.CENTER);
+        add(reisplannerScreenTest);
 
         Home.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
