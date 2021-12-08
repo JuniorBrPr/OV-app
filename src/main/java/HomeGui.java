@@ -2,6 +2,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 public class HomeGui extends JFrame {
     private JPanel homescreen;
@@ -10,6 +12,10 @@ public class HomeGui extends JFrame {
     private JButton Account, Reisplanner, Taal, Home;
 
     HomeGui() {
+        //Change locale to "nl" "NL", to make the homescreen dutch again
+        Locale locale = new Locale("us", "US");
+        ResourceBundle bundle = ResourceBundle.getBundle("bundle", locale);
+
         getContentPane().setLayout(new FlowLayout());
         homescreen = new JPanel();
         homescreen.setSize(300,40);
@@ -22,10 +28,10 @@ public class HomeGui extends JFrame {
         Account = new JButton("Account");
         homescreen.add(Account);
 
-        Reisplanner = new JButton("Reisplanner");
+        Reisplanner = new JButton(bundle.getString("reisplanner"));
         homescreen.add(Reisplanner, BorderLayout.SOUTH);
 
-        Taal = new JButton("Taal");
+        Taal = new JButton(bundle.getString("taal"));
         homescreen.add(Taal);
 
         JPanel loginScreen = new Login().getLoginScreen();
