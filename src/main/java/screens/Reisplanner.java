@@ -1,3 +1,5 @@
+package screens;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -14,23 +16,23 @@ public class Reisplanner extends JPanel implements ActionListener
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     // De data die nodig is om een GUI te maken
-    private JLabel label;
-    private JPanel panel;
-    private JButton zoeken;
-    private JComboBox aankomstBox;
-    private JComboBox vertrekBox;
-    private JTextField text;
-    private JLabel routegevonden;
-    private JLabel vertrekLocatie;
-    private JLabel aankomstLocatie;
-    private JButton Home;
-    public String arrivalSearch;
-    public String departureSearch;
-    private JComboBox hourBox;
-    private JComboBox minuteBox;
-    public String departureTimeSearch;
-    private JLabel reisAdvies = new JLabel();
-    public LocalTime stringToLocalTime;
+    private JLabel      label;
+    private JPanel      panel;
+    private JButton     zoeken;
+    private JComboBox   aankomstBox;
+    private JComboBox   vertrekBox;
+    private JTextField  text;
+    private JLabel      routegevonden;
+    private JLabel      vertrekLocatie;
+    private JLabel      aankomstLocatie;
+    private JButton     Home;
+    public  String      arrivalSearch;
+    public  String      departureSearch;
+    private JComboBox   hourBox;
+    private JComboBox   minuteBox;
+    public  String      departureTimeSearch;
+    private JLabel      reisAdvies = new JLabel();
+    public  LocalTime   stringToLocalTime;
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -148,10 +150,12 @@ public class Reisplanner extends JPanel implements ActionListener
                 int minuteSearch = (int)minuteBox.getSelectedItem();
                 LocalTime departureTimeSearch = LocalTime.of(hourSearch,minuteSearch);
 
-                System.out.println(departureTimeSearch);
+
                 reisAdvies.setText(bundle.getString("wiltReizenNaar")+ " " + arrivalSearch + " " + bundle.getString("vanuit") + " " + departureSearch + " " + bundle.getString("rondTijd") + " " + departureTimeSearch);
                 add(reisAdvies);
                 reisAdvies.setBounds(50, 150, 300, 50);
+
+
 
             }
         });

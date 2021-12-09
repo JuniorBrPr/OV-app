@@ -1,8 +1,11 @@
+package screens;
+
+import json.Json;
+import json.User;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.io.*;
-import java.io.FileWriter;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
@@ -23,6 +26,7 @@ public class Login
     private JPanel loginScreen;
     private JPanel signUpScreen;
     private JPanel loginScreenView;
+    private Json json = new Json();
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -48,8 +52,8 @@ public class Login
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-        //set the label Login with a font and a color: Niels van Gortel
-        l1 = new JLabel("Login");
+        //set the label login with a font and a color: Niels van Gortel
+        l1 = new JLabel(bundle.getString("inloggen"));
         l1.setFont(new Font("Arial",Font.BOLD,30));
         l1.setForeground(Color.BLUE);
         l1.setBounds(120,10,300,65);
@@ -99,19 +103,14 @@ public class Login
                 String password = t2.getText().toString();
 
                 try {
-                    FileReader fr = new FileReader("login.txt");
-                    BufferedReader br = new BufferedReader(fr);
-                    String line;
-                    while ((line = br.readLine()) != null) {
-                        if (line.equals(username + "\t" + password)) {
-                            matched = true;
-                            break;
-                        }
+                    int userId = json.login(username,password);
+                    if (userId!=0){
+                        matched = true;
                     }
-                    fr.close();
                 }catch (Exception e){}
 
                 if(matched){
+                    System.out.println("It works");
                     //Yet to add
                 }else{
                     l2.setText(bundle.getString("verkeerdeGegevens"));
@@ -127,6 +126,12 @@ public class Login
                 }
                 else
                     l2.setText("Verkeerde gebruikersnaam of wachtwoord");*/
+            }
+        });
+        this.b2.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent ae) {
+                signUpScreen.setVisible(true);
+                loginScreen.setVisible(false);
             }
         });
 
@@ -186,9 +191,11 @@ public class Login
         b1.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ae) {
                 try {
-                    FileWriter fw = new FileWriter("Login.txt", true);
-                    fw.write(t1.getText() + "\t" + t2.getText() + "\n");
-                    fw.close();
+                    Json json = new Json();
+                    var user = new User();
+                    user.setUserName(t1.getText());
+                    user.setPassword(t2.getText());
+                    json.addUser(user);
                     Frame f = new JFrame();
                     JOptionPane.showMessageDialog(f, bundle.getString("accountAangemaakt"));
                     signUpScreenView.setVisible(false);

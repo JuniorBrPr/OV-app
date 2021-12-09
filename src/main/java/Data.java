@@ -2,9 +2,18 @@ import java.time.LocalTime;
 import java.util.*;
 
 public class Data {
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    //Declarations
     protected final HashMap<String, Location> locationMap = new HashMap<>();
     protected final SortedMap<String, HashSet<Route>> routeMap = new TreeMap<>();
 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    //Constructor
     public Data() {
 
         Location location = new Location("Amersfoort");
@@ -35,6 +44,10 @@ public class Data {
         locationMap.put(location.getName(), location);
 
     }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 
     protected Trips getTrips(String keyA, String keyB, LocalTime departure)
     {
@@ -80,6 +93,32 @@ public class Data {
         }
 
         set.add(route);
+    }
+
+    //Print de eerstvolgende route
+    public void printRoutes( String keyA, String keyB){
+
+        int count = 0;
+        for (var e : routeMap.entrySet()) {
+
+            var routeKey  = e.getKey();
+            var posA        = routeKey.indexOf(keyA);
+
+            if (posA >= 0){
+
+                var posB    = routeKey.indexOf(keyB);
+
+                if(posB > posA){
+
+                    var set = e.getValue();
+
+                    for (var r : set){
+                        System.out.format("%2d. %s: departure %s\n", ++count, r.getKey(),r.getDeparture());
+                    }
+                }
+            }
+        }
+
     }
 }
 
