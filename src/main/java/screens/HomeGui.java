@@ -17,6 +17,8 @@ public class HomeGui extends JFrame {
     private JTabbedPane mainPanel;
     private Locale baseLocale;
     private Locale usLocale;
+    ImageIcon[] images;
+    String[] imageStrings = {"translate", "dutch", "english"};
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -32,27 +34,81 @@ public class HomeGui extends JFrame {
         TabbedPanel tabbedPanel = new TabbedPanel();
         mainPanel = tabbedPanel.TabbedPaneTest(baseLocale);
 
-        Locale[] locales = new Locale[]{
-                baseLocale, usLocale
-        };
 
-        JComboBox<Locale> comboBox = new JComboBox<>(locales);
-        comboBox.addActionListener(event -> {
+        //
+        images = new ImageIcon[imageStrings.length];
+        Integer[] intArray = new Integer[imageStrings.length];
+        for (int i = 0; i < imageStrings.length;i++){
+            intArray[i]= i;
+            images[i] = new ImageIcon("src/main/resources/images/"+ imageStrings[i] +".png");
+            if (images[i] != null) {
+                images[i].setDescription(imageStrings[i]);
+            }
+        }
+
+        JComboBox imgList = new JComboBox(intArray);
+        ComboBoxRenderer renderer= new ComboBoxRenderer();
+
+        renderer.setPreferredSize(new Dimension(32, 32));
+        imgList.setRenderer(renderer);
+        imgList.setMaximumRowCount(3);
+        add(imgList, BorderLayout.NORTH);
+
+        imgList.addActionListener(event -> {
             JComboBox comboBox1 = (JComboBox) event.getSource();
             Object selected = comboBox1.getSelectedItem();
-            if (selected!=baseLocale) {
-                baseLocale = (Locale) selected;
+            System.out.println(selected);
+            if (selected.equals(2)){
                 int panelIndex = mainPanel.getSelectedIndex();
                 getContentPane().remove(mainPanel);
-                mainPanel = tabbedPanel.TabbedPaneTest((Locale) selected);
+                mainPanel = tabbedPanel.TabbedPaneTest(usLocale);
+                tabbedPanel.mainPanel.setSelectedIndex(panelIndex);
+                getContentPane().add(mainPanel);
+                pack();
+            } else {
+                int panelIndex = mainPanel.getSelectedIndex();
+                getContentPane().remove(mainPanel);
+                mainPanel = tabbedPanel.TabbedPaneTest(baseLocale);
                 tabbedPanel.mainPanel.setSelectedIndex(panelIndex);
                 getContentPane().add(mainPanel);
                 pack();
             }
         });
 
-        getContentPane().add(comboBox, BorderLayout.NORTH);
         getContentPane().add(mainPanel, BorderLayout.CENTER);
         pack();
+    }
+
+    class ComboBoxRenderer extends JLabel
+            implements ListCellRenderer {
+        public ComboBoxRenderer() {
+            setOpaque(true);
+            setHorizontalAlignment(CENTER);
+            setVerticalAlignment(CENTER);
+        }
+        public Component getListCellRendererComponent(
+                JList list,
+                Object value,
+                int index,
+                boolean isSelected,
+                boolean cellHasFocus) {
+            int selectedIndex = ((Integer)value).intValue();
+            if (isSelected) {
+                setBackground(list.getSelectionBackground());
+                setForeground(list.getSelectionForeground());
+            } else {
+                setBackground(list.getBackground());
+                setForeground(list.getForeground());
+            }
+
+            //Set the icon .  If icon was null, say so.
+            ImageIcon icon = images[selectedIndex];
+            setIcon(icon);
+            if (icon == null) {
+                System.out.println("No image available");
+            }
+            return this;
+        }
+
     }
 }
