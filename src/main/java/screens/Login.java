@@ -182,8 +182,8 @@ public class Login
         l3 = new JLabel(bundle.getString("registratie"));
         l3.setFont(new Font("Arial", Font.BOLD, 30));
         l3.setForeground(Color.BLUE);
-        l3.setBounds(120, 10, 300, 30);
-        l3.setBorder(BorderFactory.createEmptyBorder(60,30,30,30));
+//        l3.setBounds(120, 10, 300, 30);
+//        l3.setBorder(BorderFactory.createEmptyBorder(60,30,30,30));
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
