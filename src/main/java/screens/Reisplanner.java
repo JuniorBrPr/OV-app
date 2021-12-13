@@ -5,7 +5,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
@@ -25,7 +24,6 @@ public class Reisplanner extends JPanel implements ActionListener
     private JLabel      routegevonden;
     private JLabel      vertrekLocatie;
     private JLabel      aankomstLocatie;
-    private JButton     Home;
     public  String      arrivalSearch;
     public  String      departureSearch;
     private JComboBox   hourBox;
@@ -60,22 +58,22 @@ public class Reisplanner extends JPanel implements ActionListener
         {
             // comboboxen DOOR: Niels van Gortel
             JPanel comboBoxPanel = new JPanel();
-//            comboBoxPanel.setBounds(50, 100, 394, 25);
+            comboBoxPanel.setBounds(50, 100, 394, 25);
             comboBoxPanel.setLayout(new GridLayout(0, 1, 10, 0));
             comboBoxPanel.setBackground(Color.white);
 
             JPanel Transport = new JPanel();
-//            Transport.setBounds(10, 3, 10, 25);
+            Transport.setBounds(10, 3, 10, 25);
 
             ////////////////////////////////////////////////////////////////////////////////////////////////////////////
             ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
             //tijd dropdown         TODO zorgen dat er een default is van huidige tijd
             hourBox = new JComboBox(new Object[]{0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23});
-//            hourBox.setBounds(100, 200, 100, 25);
+            hourBox.setBounds(100, 200, 100, 25);
 
             minuteBox = new JComboBox(new Object[]{0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59});
-//            minuteBox.setBounds(200, 200, 100, 25);
+            minuteBox.setBounds(200, 200, 100, 25);
 
             ////////////////////////////////////////////////////////////////////////////////////////////////////////////
             ////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -127,10 +125,9 @@ public class Reisplanner extends JPanel implements ActionListener
             add(Transport);
             add(hourBox);
             add(minuteBox);
-            add(aankomstBox);
             add(vertrekBox);
+            add(aankomstBox);
             add(zoeken);
-            //add(Home);
             add(label);
             add(panel, BorderLayout.CENTER);
 
@@ -150,13 +147,10 @@ public class Reisplanner extends JPanel implements ActionListener
                 int minuteSearch = (int)minuteBox.getSelectedItem();
                 LocalTime departureTimeSearch = LocalTime.of(hourSearch,minuteSearch);
 
-
                 reisAdvies.setText(bundle.getString("wiltReizenNaar")+ " " + arrivalSearch + " " + bundle.getString("vanuit") + " " + departureSearch + " " + bundle.getString("rondTijd") + " " + departureTimeSearch);
                 add(reisAdvies);
-//                reisAdvies.setBounds(50, 150, 300, 50);
+                repaint();
                 revalidate();
-
-
             }
         });
 
