@@ -45,7 +45,7 @@ public class Login
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         loginScreen = new JPanel();
-        loginScreen.setSize(400, 400);
+//        loginScreen.setSize(400, 400);
         loginScreen.setLayout(new GridLayout(0,1));
         loginScreen.setBorder(BorderFactory.createEmptyBorder(60, 30, 30, 30));
 
@@ -71,16 +71,16 @@ public class Login
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         // set the size of the button and the textfield
-        t1.setBounds(100,60,90,20);
-        t2.setBounds(100,90,90,20);
-        b1.setBounds(100,120,90,30);
-        b2.setBounds(100,150,90,30);
+//        t1.setBounds(100,60,90,20);
+//        t2.setBounds(100,90,90,20);
+//        b1.setBounds(100,120,90,30);
+//        b2.setBounds(100,150,90,30);
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         l2 = new JLabel("");
-        l2.setBounds(250,80,300,30);
+//        l2.setBounds(250,80,300,30);
 
         // add the textfield to the frame
         loginScreen.add(l1);
@@ -165,7 +165,7 @@ public class Login
 
         JPanel signUpScreenView = new JPanel();
         signUpScreenView.setLayout(new GridLayout(0,1));
-        signUpScreenView.setSize(400, 300);
+//        signUpScreenView.setSize(400, 300);
         signUpScreenView.setBorder(BorderFactory.createEmptyBorder(60, 30, 30, 30));
 
 
@@ -175,9 +175,9 @@ public class Login
         t2 = new JPasswordField(40);
         b1 = new JButton(bundle.getString("bevestig"));
 
-        t1.setBounds(100,60,90,20);
-        t2.setBounds(100,90,90,20);
-        b1.setBounds(100, 100, 80, 30);
+//        t1.setBounds(100,60,90,20);
+//        t2.setBounds(100,90,90,20);
+//        b1.setBounds(100, 100, 80, 30);
 
         l3 = new JLabel(bundle.getString("registratie"));
         l3.setFont(new Font("Arial", Font.BOLD, 30));
