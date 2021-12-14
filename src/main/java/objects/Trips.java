@@ -8,6 +8,10 @@ public class Trips
 {
     private final ArrayList<Trip> trips = new ArrayList<>();
 
+    public ArrayList<Trip> getTrips() {
+        return trips;
+    }
+
     public void addTrip(Trip trip)
     {
         trips.add(trip);

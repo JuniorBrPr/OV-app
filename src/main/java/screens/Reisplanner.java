@@ -1,15 +1,19 @@
 package screens;
 
+import objects.Data;
+import objects.Location;
+import objects.Trip;
+import objects.Trips;
+
 import javax.swing.*;
+import javax.swing.text.DateFormatter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
 import java.time.LocalTime;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Locale;
-import java.util.ResourceBundle;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
 
 public class Reisplanner extends JPanel implements ActionListener
 {
@@ -29,12 +33,13 @@ public class Reisplanner extends JPanel implements ActionListener
     private JLabel      aankomstLocatie;
     public  String      arrivalSearch;
     public  String      departureSearch;
-    public  String      departureTimeSearch;
+    public  String departureTimeSearch;
     public  Object      chosenTime;
     private JLabel      reisAdvies = new JLabel();
     public  LocalTime   stringToLocalTime;
     public  JSpinner    timeSpinner;
-
+    private Data data = new Data();
+    private JPanel tripsPanel;
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -89,14 +94,27 @@ public class Reisplanner extends JPanel implements ActionListener
             ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
             // Zet het keuze menu van de vertreklocaties
-            vertrekBox = new JComboBox(new Object[]{bundle.getString("vertrekLocatie"), "Amsterdam", "Rotterdam", "Utrecht", "Den haag", "Amersfoort", "Schiphol airport"});
-            aankomstBox = new JComboBox(new Object[]{bundle.getString("aankomstLocatie"), "Amsterdam", "Rotterdam", "Utrecht", "Den haag", "Amersfoort", "Schiphol airport"});
+
+            HashMap<String, Location> locations = data.getLocationMap();
+            System.out.println(locations);
+            Set<String> keySet = locations.keySet();
+            ArrayList<String> listOfKeys = new ArrayList<String>(keySet);
+            
+//            String[] startLocations
+//            for (Object l : locations.values()) {
+//                Location location = (Location) l;
+//                System.out.println(location.getName());
+//            }
+            vertrekBox = new JComboBox(listOfKeys.toArray());
+//            vertrekBox = new JComboBox(new Object[]{bundle.getString("vertrekLocatie"), "Amsterdam", "Rotterdam", "Utrecht", "Den haag", "Amersfoort", "Schiphol airport"});
+            aankomstBox = new JComboBox(listOfKeys.toArray());
 
             ////////////////////////////////////////////////////////////////////////////////////////////////////////////
             ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
             // maakt het panel aan
             panel = new JPanel();
+            tripsPanel = new JPanel();
             panel.setBorder(BorderFactory.createEmptyBorder(10, 0, 30, 30));
             panel.setLayout(new GridLayout(6, 0));
             setSize(400, 400);
@@ -146,11 +164,30 @@ public class Reisplanner extends JPanel implements ActionListener
             public void actionPerformed(ActionEvent search) {
                 String arrivalSearch = (String)aankomstBox.getSelectedItem();
                 String departureSearch = (String)vertrekBox.getSelectedItem();
-                SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
-                departureTimeSearch = sdf.format(timeSpinner.getValue());
 
-                reisAdvies.setText(bundle.getString("wiltReizenNaar")+ " " + arrivalSearch + " " + bundle.getString("vanuit") + " " + departureSearch + " " + bundle.getString("rondTijd") + " " + departureTimeSearch);
-                add(reisAdvies);
+                SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+                DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm");
+                departureTimeSearch = sdf.format(timeSpinner.getValue());
+                LocalTime localTimeD = LocalTime.parse(departureTimeSearch);
+
+                Trips trips = data.getTrips(departureSearch, arrivalSearch, localTimeD);
+                ArrayList<Trip> tripArrayList = trips.getTrips();
+
+//                reisAdvies.setText(bundle.getString("wiltReizenNaar")+ " " + arrivalSearch + " " + bundle.getString("vanuit") + " " + departureSearch + " " + bundle.getString("rondTijd") + " " + departureTimeSearch);
+
+                remove(tripsPanel);
+                tripsPanel = new JPanel();
+                tripsPanel.setLayout(new GridLayout(0,1));
+
+                for (Trip t :tripArrayList){
+                    JLabel tripLabel = new JLabel();
+                    tripLabel.setText(t.getRoute().getEndPoint()+" "+t.getDeparture()+"");
+                    tripsPanel.add(tripLabel);
+                }
+
+                add(tripsPanel);
+
+//                add(reisAdvies);
                 repaint();
                 revalidate();
             }

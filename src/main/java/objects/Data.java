@@ -27,11 +27,11 @@ public class Data {
         locationMap.put(location.getName(), location);
         location = new Location("Utrecht");
         locationMap.put(location.getName(), location);
-        location = new Location("Amsterdam zuid");
+        location = new Location("Amsterdam Zuid");
         locationMap.put(location.getName(), location);
         location = new Location("Amsterdam");
         locationMap.put(location.getName(), location);
-        location = new Location("Schiphol airport");
+        location = new Location("Schiphol Airport");
         locationMap.put(location.getName(), location);
         location = new Location("Apeldoorn");
         locationMap.put(location.getName(), location);
@@ -61,14 +61,14 @@ public class Data {
         for (int hour = 7; hour <= 19; hour += 1) {
             var route = new Route(locationMap.get("Amersfoort"), LocalTime.of(hour, 0));
             route.addStopOver(locationMap.get("Utrecht"), LocalTime.of(hour, 15), LocalTime.of(hour, 16));
-            route.addStopOver(locationMap.get("Amsterdam zuid"), LocalTime.of(hour, 31), LocalTime.of(hour, 31));
-            route.addEndPoint(locationMap.get("Schiphol airport"), LocalTime.of(hour, 46));
+            route.addStopOver(locationMap.get("Amsterdam Zuid"), LocalTime.of(hour, 31), LocalTime.of(hour, 31));
+            route.addEndPoint(locationMap.get("Schiphol Airport"), LocalTime.of(hour, 46));
             addRoute(route);
         }
         // Schiphol Aiport----Amersfoort
         for (int hour = 7; hour <= 19; hour += 1) {
             ////////////
-            var route = new Route(locationMap.get("Schiphol airport"), LocalTime.of(hour, 30));
+            var route = new Route(locationMap.get("Schiphol Airport"), LocalTime.of(hour, 30));
             route.addStopOver(locationMap.get("Amsterdam Zuid"), LocalTime.of(hour, 45), LocalTime.of(hour, 45));
             route.addStopOver(locationMap.get("Utrecht"), LocalTime.of(hour + 1, 0), LocalTime.of(hour + 1, 0));
             route.addEndPoint(locationMap.get("Amersfoort"), LocalTime.of(hour + 1, 15));
@@ -103,7 +103,7 @@ public class Data {
         for (int hour = 7; hour <= 19; hour += 1) {
             ////////////
             var route = new Route(locationMap.get("Rotterdam"), LocalTime.of(hour, 0));
-            route.addStopOver(locationMap.get("Schiphol airport"), LocalTime.of(hour, 15), LocalTime.of(hour, 16));
+            route.addStopOver(locationMap.get("Schiphol Airport"), LocalTime.of(hour, 15), LocalTime.of(hour, 16));
             route.addEndPoint(locationMap.get("Amsterdam"), LocalTime.of(hour, 38));
             addRoute(route);
         }

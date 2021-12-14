@@ -2,6 +2,8 @@ package objects;
 
 import java.time.LocalTime;
     public class Trip {
+
+
         private final Route route;
         private final Location locationA;
         private final Location locationB;
@@ -20,6 +22,21 @@ import java.time.LocalTime;
             return departure;
         }
 
+        public Route getRoute() {
+            return route;
+        }
+
+        public Location getLocationA() {
+            return locationA;
+        }
+
+        public Location getLocationB() {
+            return locationB;
+        }
+
+        public LocalTime getArrival() {
+            return arrival;
+        }
         public void print()
         {
             System.out.println(route.getKey() + departure + arrival);
