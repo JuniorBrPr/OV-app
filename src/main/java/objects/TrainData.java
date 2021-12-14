@@ -1,3 +1,9 @@
+package objects;
+
+import objects.Data;
+import objects.Location;
+import objects.Route;
+
 import java.time.LocalTime;
 
 public class TrainData extends Data {

@@ -1,3 +1,7 @@
+package objects;
+
+import objects.Trip;
+
 import java.util.ArrayList;
 
 public class Trips

@@ -1,3 +1,5 @@
+package objects;
+
 import java.time.LocalTime;
     public class Trip {
         private final Route route;

@@ -6,13 +6,13 @@ public class User {
     private int userId;
     private String userName;
     private String password;
-//    private Trip[] trips;
+//    private objects.Trip[] trips;
 //
-//    public Trip[] getTrips() {
+//    public objects.Trip[] getTrips() {
 //        return trips;
 //    }
 //
-//    public void setTrips(Trip[] trips) {
+//    public void setTrips(objects.Trip[] trips) {
 //        this.trips = trips;
 //    }
 
