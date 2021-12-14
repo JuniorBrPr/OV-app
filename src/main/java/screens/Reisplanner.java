@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.SimpleDateFormat;
 import java.time.LocalTime;
 import java.util.Calendar;
 import java.util.Date;
@@ -29,6 +30,7 @@ public class Reisplanner extends JPanel implements ActionListener
     public  String      arrivalSearch;
     public  String      departureSearch;
     public  String      departureTimeSearch;
+    public  Object      chosenTime;
     private JLabel      reisAdvies = new JLabel();
     public  LocalTime   stringToLocalTime;
     public  JSpinner    timeSpinner;
@@ -125,12 +127,12 @@ public class Reisplanner extends JPanel implements ActionListener
             Transport.add(Tram);
             Transport.add(Bus);
             add(Transport);
+            add(timeSpinner);
             add(vertrekBox);
             add(aankomstBox);
             add(zoeken);
             add(label);
             add(panel, BorderLayout.CENTER);
-            add(timeSpinner);
 
             setVisible(false);
         }
@@ -144,8 +146,10 @@ public class Reisplanner extends JPanel implements ActionListener
             public void actionPerformed(ActionEvent search) {
                 String arrivalSearch = (String)aankomstBox.getSelectedItem();
                 String departureSearch = (String)vertrekBox.getSelectedItem();
+                SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+                departureTimeSearch = sdf.format(timeSpinner.getValue());
 
-                reisAdvies.setText(bundle.getString("wiltReizenNaar")+ " " + arrivalSearch + " " + bundle.getString("vanuit") + " " + departureSearch + " " + bundle.getString("rondTijd") + " ");
+                reisAdvies.setText(bundle.getString("wiltReizenNaar")+ " " + arrivalSearch + " " + bundle.getString("vanuit") + " " + departureSearch + " " + bundle.getString("rondTijd") + " " + departureTimeSearch);
                 add(reisAdvies);
                 repaint();
                 revalidate();
