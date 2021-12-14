@@ -90,5 +90,10 @@ public class Route {
     public LocalTime getArrival() {
         return stopOvers.get(stopOvers.size() -1).getArrival();
     }
+
+    public LocalTime getArrival(Location locationB)
+    {
+    return getArrival();
+    }
 }
 

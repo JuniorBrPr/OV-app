@@ -2,40 +2,38 @@ import java.time.LocalTime;
 
 public class TrainData extends Data {
     public TrainData() {
-
-
-            Location location = new Location("Amersfoort");
-            locationMap.put(location.getName(), location);
-            location = new Location("Utrecht");
-            locationMap.put(location.getName(), location);
-            location = new Location("Amsterdam zuid");
-            locationMap.put(location.getName(), location);
-            location = new Location("Amsterdam");
-            locationMap.put(location.getName(), location);
-            location = new Location("Schiphol airport");
-            locationMap.put(location.getName(), location);
-            location = new Location("Apeldoorn");
-            locationMap.put(location.getName(), location);
-            location = new Location("Rotterdam");
-            locationMap.put(location.getName(), location);
-            location = new Location("Den Haag");
-            locationMap.put(location.getName(), location);
-            location = new Location("Gouda");
-            locationMap.put(location.getName(), location);
-            location = new Location("Tilburg");
-            locationMap.put(location.getName(), location);
-            location = new Location("Breda");
-            locationMap.put(location.getName(), location);
-            location = new Location("Eindhoven");
-            locationMap.put(location.getName(), location);
-            location = new Location("Enschede");
-            locationMap.put(location.getName(), location);
-            location = new Location("Almelo");
-            locationMap.put(location.getName(), location);
-            location = new Location("Hengelo");
-            locationMap.put(location.getName(), location);
-            location = new Location("Deventer");
-            locationMap.put(location.getName(), location);
+        Location location = new Location("Amersfoort");
+        locationMap.put(location.getName(), location);
+        location = new Location("Utrecht");
+        locationMap.put(location.getName(), location);
+        location = new Location("Amsterdam zuid");
+        locationMap.put(location.getName(), location);
+        location = new Location("Amsterdam");
+        locationMap.put(location.getName(), location);
+        location = new Location("Schiphol airport");
+        locationMap.put(location.getName(), location);
+        location = new Location("Apeldoorn");
+        locationMap.put(location.getName(), location);
+        location = new Location("Rotterdam");
+        locationMap.put(location.getName(), location);
+        location = new Location("Den Haag");
+        locationMap.put(location.getName(), location);
+        location = new Location("Gouda");
+        locationMap.put(location.getName(), location);
+        location = new Location("Tilburg");
+        locationMap.put(location.getName(), location);
+        location = new Location("Breda");
+        locationMap.put(location.getName(), location);
+        location = new Location("Eindhoven");
+        locationMap.put(location.getName(), location);
+        location = new Location("Enschede");
+        locationMap.put(location.getName(), location);
+        location = new Location("Almelo");
+        locationMap.put(location.getName(), location);
+        location = new Location("Hengelo");
+        locationMap.put(location.getName(), location);
+        location = new Location("Deventer");
+        locationMap.put(location.getName(), location);
 
 
             // Amersfoort----Schipjol Aiport
