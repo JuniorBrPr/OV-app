@@ -81,6 +81,7 @@ public class Login
 
                 if(matched){
                     System.out.println("It works");
+                    l2.setText("");
                     //Yet to add
                 }else{
                     l2.setText(bundle.getString("verkeerdeGegevens"));
@@ -124,7 +125,7 @@ public class Login
     public JPanel SignUp(Locale locale)  {
         JTextField t1, t2;
         JButton b1;
-        JLabel l3;
+        JLabel l3,l4;
         ResourceBundle bundle = ResourceBundle.getBundle("bundle", locale);
 
         JPanel signUpScreenView = new JPanel();
@@ -142,18 +143,28 @@ public class Login
         l3.setFont(new Font("Arial", Font.BOLD, 30));
         l3.setForeground(Color.BLUE);
 
+        l4 = new JLabel();
+        l4.setFont(new Font("Arial", Font.BOLD, 10));
+        l4.setForeground(Color.RED);
+
         b1.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ae) {
                 try {
                     Json json = new Json();
-                    var user = new User();
-                    user.setUserName(t1.getText());
-                    user.setPassword(t2.getText());
-                    json.addUser(user);
-                    Frame f = new JFrame();
-                    JOptionPane.showMessageDialog(f, bundle.getString("accountAangemaakt"));
-                    signUpScreenView.setVisible(false);
-                    loginScreen.setVisible(true);
+                    if(t1.getText().length()!=0 && t2.getText().length()!=0) {
+
+                        var user = new User();
+                        user.setUserName(t1.getText());
+                        user.setPassword(t2.getText());
+                        json.addUser(user);
+                        Frame f = new JFrame();
+                        JOptionPane.showMessageDialog(f, bundle.getString("accountAangemaakt"));
+                        signUpScreenView.setVisible(false);
+                        loginScreen.setVisible(true);
+                    }else {
+                        l4.setText("Invalid input");
+
+                    }
                 } catch (Exception e) {
                 }
             }
@@ -163,6 +174,7 @@ public class Login
         signUpScreenView.add(t1);
         signUpScreenView.add(t2);
         signUpScreenView.add(b1);
+        signUpScreenView.add(l4);
         signUpScreenView.setVisible(false);
         return signUpScreenView;
 
