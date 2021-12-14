@@ -3,6 +3,7 @@ import java.time.LocalTime;
 public class TrainData extends Data {
     public TrainData() {
 
+
         // Amersfoort----Schipjol Aiport
         for (int hour = 7; hour <= 19; hour += 1) {
             var route = new Route(locationMap.get("Amersfoort"), LocalTime.of(hour, 0));
@@ -67,5 +68,30 @@ public class TrainData extends Data {
             route.addEndPoint(locationMap.get("Breda"), LocalTime.of(hour, 40));
             addRoute(route);
         }
+
+        // Enschede---Utrecht centraal
+        for (int hour = 7; hour <= 19; hour += 1) {
+            var route = new Route(locationMap.get("Enschede"), LocalTime.of(hour, 0));
+            route.addStopOver(locationMap.get("Hengelo"), LocalTime.of(hour, 18), LocalTime.of(hour, 19));
+            route.addStopOver(locationMap.get("Almelo"), LocalTime.of(hour, 31), LocalTime.of(hour, 31));
+            route.addStopOver(locationMap.get("Deventer"), LocalTime.of(hour, 53), LocalTime.of(hour, 54));
+            route.addStopOver(locationMap.get("Apeldoorn"), LocalTime.of(hour+1, 6), LocalTime.of(hour, 7));
+            route.addStopOver(locationMap.get("Amersfoort"), LocalTime.of(hour+1, 32), LocalTime.of(hour, 33));
+            route.addEndPoint(locationMap.get("Utrecht"), LocalTime.of(hour+1, 46));
+            addRoute(route);
+        }
+        // Utrecht centraal---Enschede
+        for (int hour = 7; hour <= 19; hour += 1) {
+            var route = new Route(locationMap.get("Utrecht"), LocalTime.of(hour, 0));
+            route.addStopOver(locationMap.get("Amersfoort"), LocalTime.of(hour, 18), LocalTime.of(hour, 19));
+            route.addStopOver(locationMap.get("Apeldoorn"), LocalTime.of(hour, 31), LocalTime.of(hour, 31));
+            route.addStopOver(locationMap.get("Deventer"), LocalTime.of(hour, 53), LocalTime.of(hour, 54));
+            route.addStopOver(locationMap.get("Almelo"), LocalTime.of(hour+1, 6), LocalTime.of(hour, 7));
+            route.addStopOver(locationMap.get("Hengelo"), LocalTime.of(hour+1, 32), LocalTime.of(hour, 33));
+            route.addEndPoint(locationMap.get("Enschede"), LocalTime.of(hour+1, 46));
+            addRoute(route);
+        }
     }
 }
+
+
