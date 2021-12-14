@@ -35,7 +35,8 @@ public class BusData extends Data
         locationMap.put(location.getName(), location);
         location = new Location("Deventer");
         locationMap.put(location.getName(), location);
-
+        location = new Location("Deventer");
+        locationMap.put(location.getName(), location);
 
 
         for (int hour = 7; hour <= 19; hour += 1) {
