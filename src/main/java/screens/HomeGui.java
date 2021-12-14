@@ -101,7 +101,7 @@ public class HomeGui extends JFrame {
                 setForeground(list.getForeground());
             }
 
-            //Set the icon .  If icon was null, say so.
+            //Set the icon. If icon was null, say so.
             ImageIcon icon = images[selectedIndex];
             setIcon(icon);
             if (icon == null) {
@@ -109,6 +109,5 @@ public class HomeGui extends JFrame {
             }
             return this;
         }
-
     }
 }
