@@ -5,6 +5,8 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalTime;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
@@ -26,11 +28,10 @@ public class Reisplanner extends JPanel implements ActionListener
     private JLabel      aankomstLocatie;
     public  String      arrivalSearch;
     public  String      departureSearch;
-    private JComboBox   hourBox;
-    private JComboBox   minuteBox;
     public  String      departureTimeSearch;
     private JLabel      reisAdvies = new JLabel();
     public  LocalTime   stringToLocalTime;
+    public  JSpinner    timeSpinner;
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -68,14 +69,13 @@ public class Reisplanner extends JPanel implements ActionListener
             ////////////////////////////////////////////////////////////////////////////////////////////////////////////
             ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-            //tijd dropdown         TODO zorgen dat er een default is van huidige tijd
-            int localHour = LocalTime.now().getHour();
-            int localMinute = LocalTime.now().getMinute();
-            hourBox = new JComboBox(new Object[]{localHour,0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23});
-            hourBox.setBounds(100, 200, 100, 25);
+            Date date = new Date();
+            SpinnerDateModel sm = new SpinnerDateModel(date, null, null, Calendar.HOUR_OF_DAY);
 
-            minuteBox = new JComboBox(new Object[]{localMinute,0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59});
-            minuteBox.setBounds(200, 200, 100, 25);
+            timeSpinner = new javax.swing.JSpinner(sm);
+            timeSpinner.setBounds(500, 500, 100, 25);
+            JSpinner.DateEditor de = new JSpinner.DateEditor(timeSpinner, "HH:mm");
+            timeSpinner.setEditor(de);
 
             ////////////////////////////////////////////////////////////////////////////////////////////////////////////
             ////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -125,13 +125,12 @@ public class Reisplanner extends JPanel implements ActionListener
             Transport.add(Tram);
             Transport.add(Bus);
             add(Transport);
-            add(hourBox);
-            add(minuteBox);
             add(vertrekBox);
             add(aankomstBox);
             add(zoeken);
             add(label);
             add(panel, BorderLayout.CENTER);
+            add(timeSpinner);
 
             setVisible(false);
         }
@@ -145,11 +144,8 @@ public class Reisplanner extends JPanel implements ActionListener
             public void actionPerformed(ActionEvent search) {
                 String arrivalSearch = (String)aankomstBox.getSelectedItem();
                 String departureSearch = (String)vertrekBox.getSelectedItem();
-                int hourSearch = (int)hourBox.getSelectedItem();
-                int minuteSearch = (int)minuteBox.getSelectedItem();
-                LocalTime departureTimeSearch = LocalTime.of(hourSearch,minuteSearch);
 
-                reisAdvies.setText(bundle.getString("wiltReizenNaar")+ " " + arrivalSearch + " " + bundle.getString("vanuit") + " " + departureSearch + " " + bundle.getString("rondTijd") + " " + departureTimeSearch);
+                reisAdvies.setText(bundle.getString("wiltReizenNaar")+ " " + arrivalSearch + " " + bundle.getString("vanuit") + " " + departureSearch + " " + bundle.getString("rondTijd") + " ");
                 add(reisAdvies);
                 repaint();
                 revalidate();
