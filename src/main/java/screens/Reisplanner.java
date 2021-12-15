@@ -40,6 +40,7 @@ public class Reisplanner extends JPanel implements ActionListener
     public  JSpinner    timeSpinner;
     private Data data = new Data();
     private JPanel tripsPanel;
+    JScrollPane scrollPane;
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -99,7 +100,7 @@ public class Reisplanner extends JPanel implements ActionListener
             System.out.println(locations);
             Set<String> keySet = locations.keySet();
             ArrayList<String> listOfKeys = new ArrayList<String>(keySet);
-            
+
 //            String[] startLocations
 //            for (Object l : locations.values()) {
 //                Location location = (Location) l;
@@ -115,6 +116,7 @@ public class Reisplanner extends JPanel implements ActionListener
             // maakt het panel aan
             panel = new JPanel();
             tripsPanel = new JPanel();
+            scrollPane = new JScrollPane();
             panel.setBorder(BorderFactory.createEmptyBorder(10, 0, 30, 30));
             panel.setLayout(new GridLayout(6, 0));
             setSize(400, 400);
@@ -175,19 +177,31 @@ public class Reisplanner extends JPanel implements ActionListener
 
 //                reisAdvies.setText(bundle.getString("wiltReizenNaar")+ " " + arrivalSearch + " " + bundle.getString("vanuit") + " " + departureSearch + " " + bundle.getString("rondTijd") + " " + departureTimeSearch);
 
+                remove(scrollPane);
                 remove(tripsPanel);
                 tripsPanel = new JPanel();
                 tripsPanel.setLayout(new GridLayout(0,1));
 
                 for (Trip t :tripArrayList){
-                    JLabel tripLabel = new JLabel();
-                    tripLabel.setText(t.getRoute().getEndPoint()+" "+t.getDeparture()+"");
-                    tripsPanel.add(tripLabel);
+                    var tripButton = new JButton();
+                    tripButton.setText(t.getRoute().getEndPoint()+" "+t.getDeparture()+"");
+                    tripButton.setPreferredSize(new Dimension(235,20));
+                    tripsPanel.add(tripButton);
+                    tripsPanel.setBackground(Color.GREEN);
+                    tripsPanel.setVisible(true);
+
                 }
-
-                add(tripsPanel);
-
-//                add(reisAdvies);
+                if (tripArrayList.size()==0){
+                    var tripButton = new JButton();
+                    tripButton.setText("Geen reis mogelijk");
+                    tripButton.setPreferredSize(new Dimension(235,20));
+                    tripsPanel.add(tripButton);
+                }
+                JPanel container = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
+                container.add(tripsPanel);
+                scrollPane = new JScrollPane(container);
+                scrollPane.setPreferredSize(new Dimension(270, 400));
+                add(scrollPane);
                 repaint();
                 revalidate();
             }
