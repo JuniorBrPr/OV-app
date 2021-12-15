@@ -12,9 +12,6 @@ public class OvApp
             g.setPreferredSize(new Dimension(700, 800));
             g.pack();
             g.setVisible(true);
-            g.setBackground(Color.BLACK);
-           
-
         }
 }
 
