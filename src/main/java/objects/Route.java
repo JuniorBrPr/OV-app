@@ -16,7 +16,7 @@ public class Route {
 
     //Constructor
     Route(Location location, LocalTime departure) {
-        var stopover = new StopOver(location.getName(), LocalTime.MAX, departure);
+        var stopover = new StopOver(location.getName(), /*LocalTime.MAX*/  departure.minusMinutes(4), departure);
         stopOvers.add(stopover);
     }
 
@@ -55,7 +55,7 @@ public class Route {
 
     //Maakt een eind halte aan
     public void addEndPoint(Location location, LocalTime arrival) {
-        var stopover = new StopOver(location.getName(), arrival, LocalTime.MIN);
+        var stopover = new StopOver(location.getName(), arrival, arrival);
         stopOvers.add(stopover);
     }
     public String getEndPoint(){
