@@ -55,4 +55,25 @@ public class Json {
         }
         return userId;
     }
+
+    public User getUser(int userId){
+        User user = new User();
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            InputStream inputStream = new FileInputStream(new File("src/main/resources/jsonFiles/users.json"));
+            var typeReference = new TypeReference<List<User>>() {};
+            List<User> users = mapper.readValue(inputStream,typeReference);
+            user = users.get(userId);
+            inputStream.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (StreamReadException e) {
+            e.printStackTrace();
+        } catch (DatabindException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return user;
+    }
 }

@@ -32,22 +32,22 @@ public class HomeGui extends JFrame {
         usLocale = new Locale("us", "US");
 
         TabbedPanel tabbedPanel = new TabbedPanel();
-        mainPanel = tabbedPanel.TabbedPaneTest(baseLocale);
+        mainPanel = tabbedPanel.TabbedPane(baseLocale, 0);
 
 
         //
         images = new ImageIcon[imageStrings.length];
         Integer[] intArray = new Integer[imageStrings.length];
-        for (int i = 0; i < imageStrings.length;i++){
-            intArray[i]= i;
-            images[i] = new ImageIcon("src/main/resources/images/"+ imageStrings[i] +".png");
+        for (int i = 0; i < imageStrings.length; i++) {
+            intArray[i] = i;
+            images[i] = new ImageIcon("src/main/resources/images/" + imageStrings[i] + ".png");
             if (images[i] != null) {
                 images[i].setDescription(imageStrings[i]);
             }
         }
 
         JComboBox imgList = new JComboBox(intArray);
-        ComboBoxRenderer renderer= new ComboBoxRenderer();
+        ComboBoxRenderer renderer = new ComboBoxRenderer();
 
         renderer.setPreferredSize(new Dimension(32, 32));
         imgList.setRenderer(renderer);
@@ -57,21 +57,24 @@ public class HomeGui extends JFrame {
         imgList.addActionListener(event -> {
             JComboBox comboBox1 = (JComboBox) event.getSource();
             Object selected = comboBox1.getSelectedItem();
-            System.out.println(selected);
-            if (selected.equals(2)){
+            if (selected.equals(2)) {
                 int panelIndex = mainPanel.getSelectedIndex();
+                int userId = tabbedPanel.loginInstance.getUserId();
                 getContentPane().remove(mainPanel);
-                mainPanel = tabbedPanel.TabbedPaneTest(usLocale);
+                mainPanel = tabbedPanel.TabbedPane(usLocale, userId);
                 tabbedPanel.mainPanel.setSelectedIndex(panelIndex);
                 getContentPane().add(mainPanel);
                 pack();
+                System.out.println(userId);
             } else {
                 int panelIndex = mainPanel.getSelectedIndex();
+                int userId = tabbedPanel.loginInstance.getUserId();
                 getContentPane().remove(mainPanel);
-                mainPanel = tabbedPanel.TabbedPaneTest(baseLocale);
+                mainPanel = tabbedPanel.TabbedPane(baseLocale, userId);
                 tabbedPanel.mainPanel.setSelectedIndex(panelIndex);
                 getContentPane().add(mainPanel);
                 pack();
+                System.out.println(userId);
             }
         });
 
@@ -86,13 +89,14 @@ public class HomeGui extends JFrame {
             setHorizontalAlignment(CENTER);
             setVerticalAlignment(CENTER);
         }
+
         public Component getListCellRendererComponent(
                 JList list,
                 Object value,
                 int index,
                 boolean isSelected,
                 boolean cellHasFocus) {
-            int selectedIndex = ((Integer)value).intValue();
+            int selectedIndex = ((Integer) value).intValue();
             if (isSelected) {
                 setBackground(list.getSelectionBackground());
                 setForeground(list.getSelectionForeground());

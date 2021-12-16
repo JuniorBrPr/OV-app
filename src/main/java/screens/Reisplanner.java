@@ -274,7 +274,7 @@ public class Reisplanner extends JPanel implements ActionListener
                 LocalTime localTimeD = LocalTime.parse(departureTimeSearch);
 
 
-                if(getSelectedButton().equals(bundle.getString("trein"))){
+                if(getSelectedButton()!=null&&getSelectedButton().equals(bundle.getString("trein"))){
                     Trips trips = trainData.getTrips(departureSearch, arrivalSearch, localTimeD);
                     ArrayList<Trip> tripArrayList = trips.getTrips();
 
@@ -342,7 +342,7 @@ public class Reisplanner extends JPanel implements ActionListener
 
                 else{
                     JLabel selectTransport = new JLabel();
-                    selectTransport.setText(bundle.getString("Selecteer een vervoersmiddel"));
+                    selectTransport.setText(bundle.getString("selectVervoer"));
                     selectTransport.setBounds(300, 300, 100, 50);
                     add(selectTransport);
                 }

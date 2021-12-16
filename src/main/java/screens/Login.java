@@ -23,12 +23,38 @@ public class Login
     private JPanel loginScreen;
     private JPanel signUpScreen;
     private JPanel loginScreenView;
+    private JPanel accountScreen;
     private Json json = new Json();
+    private int userIdInstance = 0;
+    private boolean matched = false;
+
+    public boolean isMatched() {
+        return matched;
+    }
+
+    public void setMatched(boolean matched) {
+        this.matched = matched;
+    }
+
+    public int getUserId() {
+        return userIdInstance;
+    }
+
+    public void setUserId(int userId) {
+        this.userIdInstance = userId;
+    }
 
     //Maakt de login screen
-    public JPanel getLoginScreen(Locale locale){
+    public JPanel getLoginScreen(Locale locale, int userId){
+        if(userId!=0){
+            setMatched(true);
+        }
+
+
+        setUserId(userId);
         ResourceBundle bundle = ResourceBundle.getBundle("bundle", locale);
         signUpScreen = SignUp(locale);
+        accountScreen = account(locale, userId);
 
 
         loginScreenView = new JPanel();
@@ -68,35 +94,33 @@ public class Login
         //Makes sure that the button login will make a action
         b1.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ae) {
-                boolean matched = false;
                 String username = t1.getText().toString();
                 String password = t2.getText().toString();
 
                 try {
-                    int userId = json.login(username,password);
-                    if (userId!=0){
+                    int userIdGet = json.login(username,password);
+                    setUserId(userIdGet);
+                    if (userIdGet!=0){
                         matched = true;
+                        userIdInstance = userIdGet;
                     }
                 }catch (Exception e){}
 
                 if(matched){
                     System.out.println("It works");
+                    System.out.println(json.getUser(userIdInstance).getUserName());
+                    System.out.println("UserId: "+userIdInstance);
                     l2.setText("");
+                    loginScreen.setVisible(false);
+                    signUpScreen.setVisible(false);
+                    accountScreen = account(locale, userIdInstance);
+                    accountScreen.setVisible(true);
+                    loginScreenView.add(accountScreen);
+                    loginScreenView.revalidate();
                     //Yet to add
                 }else{
                     l2.setText(bundle.getString("verkeerdeGegevens"));
                 }
-
-                /*if(t1.getText().toString().equals("admin") && t2.getText().toString().equals("admin"))
-                {
-                    //opens a new window
-                    dispose();
-                    MyFrame g = new MyFrame();
-                    g.setBounds(400,200,600,300);
-                    g.setVisible(true);
-                }
-                else
-                    l2.setText("Verkeerde gebruikersnaam of wachtwoord");*/
             }
         });
         this.b2.addActionListener(new ActionListener() {
@@ -112,12 +136,26 @@ public class Login
                 loginScreen.setVisible(false);
             }
         });
+
         loginScreenView.add(signUpScreen);
         loginScreenView.add(loginScreen);
+        loginScreenView.add(accountScreen);
 
         loginScreen.setVisible(true);
         signUpScreen.setVisible(false);
         loginScreenView.setVisible(false);
+
+        if(matched){
+            System.out.println("It works");
+            l2.setText("");
+            loginScreen.setVisible(false);
+            signUpScreen.setVisible(false);
+            accountScreen = account(locale, userId);
+            accountScreen.setVisible(true);
+            loginScreenView.add(accountScreen);
+            loginScreenView.revalidate();
+        }
+
         return loginScreenView;
     }
 
@@ -178,6 +216,40 @@ public class Login
         signUpScreenView.setVisible(false);
         return signUpScreenView;
 
+    }
+
+    public JPanel account (Locale locale, int userId){
+        accountScreen = new JPanel();
+        accountScreen.setLayout(new FlowLayout());
+        accountScreen.setBorder(BorderFactory.createEmptyBorder(60, 30, 30, 30));
+        accountScreen.setPreferredSize(new Dimension(650, 550));
+
+        accountScreen.setBackground(Color.CYAN);
+
+        User user = json.getUser(userId);
+        JLabel userName = new JLabel(user.getUserName());
+        userName.setFont(new Font("Arial",Font.BOLD,30));
+
+
+        JButton logOut = new JButton("logout");
+        logOut.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                setUserId(0);
+                matched = false;
+                loginScreenView.remove(accountScreen);
+                accountScreen.setVisible(false);
+                signUpScreen.setVisible(false);
+                loginScreen.setVisible(true);
+                loginScreenView.revalidate();
+                loginScreenView.repaint();
+            }
+        });
+
+
+        accountScreen.add(userName);
+        accountScreen.add(logOut);
+        accountScreen.setVisible(false);
+        return accountScreen;
     }
 }
 // sets the class and the size of the application
