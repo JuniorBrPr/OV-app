@@ -3,6 +3,7 @@ package screens;
 import objects.*;
 
 import javax.swing.*;
+import javax.swing.border.Border;
 import javax.swing.text.DateFormatter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -259,7 +260,6 @@ public class Reisplanner extends JPanel implements ActionListener
         zoeken.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent search) {
-
                 remove(scrollPane);
                 remove(tripsPanel);
                 tripsPanel = new JPanel();
@@ -269,7 +269,6 @@ public class Reisplanner extends JPanel implements ActionListener
                 String departureSearch = (String)vertrekBox.getSelectedItem();
 
                 SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
-                DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm");
                 departureTimeSearch = sdf.format(timeSpinner.getValue());
                 LocalTime localTimeD = LocalTime.parse(departureTimeSearch);
 
@@ -279,11 +278,24 @@ public class Reisplanner extends JPanel implements ActionListener
                     ArrayList<Trip> tripArrayList = trips.getTrips();
 
                     for (Trip t :tripArrayList){
-                        var tripButton = new JButton();
-                        tripButton.setText(t.getRoute().getEndPoint()+" "+t.getDeparture()+"");
-                        tripButton.setPreferredSize(new Dimension(235,20));
-                        tripsPanel.add(tripButton);
-                        tripsPanel.setBackground(Color.GREEN);
+                        var tripText = new JLabel();
+                        tripText.setFont(new Font("Arial",Font.BOLD,14));
+                        tripText.setText(t.getRoute().getEndPoint()+" "+t.getDeparture()+"");
+
+                        var tripPanel = new JPanel();
+                        Border blackline = BorderFactory.createLineBorder(Color.gray);
+                        tripPanel.setBorder(blackline);
+                        tripPanel.setLayout(new BorderLayout());
+                        tripPanel.setPreferredSize(new Dimension(235,30));
+
+                        var addToHistory = new JButton("+");
+                        addToHistory.setFont(new Font("Arial",Font.BOLD,20));
+//                        addToHistory.setPreferredSize(new Dimension(40, 15));
+
+                        tripPanel.add(addToHistory, BorderLayout.EAST);
+                        tripPanel.add(tripText, BorderLayout.WEST);
+
+                        tripsPanel.add(tripPanel);
                         tripsPanel.setVisible(true);
                     }
 
@@ -347,9 +359,9 @@ public class Reisplanner extends JPanel implements ActionListener
                     add(selectTransport);
                 }
 
-                JPanel container = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
-                container.add(tripsPanel);
-                scrollPane = new JScrollPane(container);
+//                JPanel container = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
+//                container.add(tripsPanel);
+                scrollPane = new JScrollPane(tripsPanel);
                 scrollPane.setPreferredSize(new Dimension(270, 400));
                 add(scrollPane);
                 repaint();
