@@ -257,17 +257,12 @@ public class Reisplanner extends JPanel implements ActionListener
 //
 //                }
 
-//                if(getSelectedButton()==null){
-//                    selectTransport.setText(bundle.getString("Selecteer een vervoersmiddel"));
-//                    selectTransport.setPreferredSize(new Dimension(235,20));
-//                    add(selectTransport);
-//                }
                 }
 
                 catch(Exception e){
                         selectTransport.setText(bundle.getString("selectVervoer"));
                         selectTransport.setPreferredSize(new Dimension(235,20));
-                        add(selectTransport);
+                        tripsPanel.add(selectTransport);
                 }
 
 
