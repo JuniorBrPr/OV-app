@@ -2,11 +2,13 @@ package objects;
 
 import objects.Trip;
 
-import java.util.ArrayList;
+import java.util.*;
 
 public class Trips
 {
     private final ArrayList<Trip> trips = new ArrayList<>();
+
+
 
     public ArrayList<Trip> getTrips() {
         return trips;
