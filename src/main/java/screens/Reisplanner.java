@@ -277,6 +277,12 @@ public class Reisplanner extends JPanel implements ActionListener
                     Trips trips = trainData.getTrips(departureSearch, arrivalSearch, localTimeD);
                     ArrayList<Trip> tripArrayList = trips.getTrips();
 
+                    Collections.sort(tripArrayList, new Comparator<Trip>() {
+                        public int compare(Trip t1, Trip t2) {
+                            return t1.getDeparture().compareTo(t2.getDeparture());
+                        }
+                    });
+
                     for (Trip t :tripArrayList){
                         var tripText = new JLabel();
                         tripText.setFont(new Font("Arial",Font.BOLD,14));
