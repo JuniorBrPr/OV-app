@@ -1,9 +1,6 @@
 package screens;
 
-import objects.Data;
-import objects.Location;
-import objects.Trip;
-import objects.Trips;
+import objects.*;
 
 import javax.swing.*;
 import javax.swing.text.DateFormatter;
@@ -33,14 +30,20 @@ public class Reisplanner extends JPanel implements ActionListener
     private JLabel      aankomstLocatie;
     public  String      arrivalSearch;
     public  String      departureSearch;
-    public  String departureTimeSearch;
+    public  String      departureTimeSearch;
     public  Object      chosenTime;
     private JLabel      reisAdvies = new JLabel();
     public  LocalTime   stringToLocalTime;
     public  JSpinner    timeSpinner;
-    private Data data = new Data();
-    private JPanel tripsPanel;
-    JScrollPane scrollPane;
+    private Data        data = new Data();
+    private TrainData   trainData= new TrainData();
+//    private BusData     busData = new BusData();
+//    private TramData    tramData = new TramData();
+    private JPanel      tripsPanel;
+            JScrollPane scrollPane;
+    private ButtonGroup group = new ButtonGroup();
+
+
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -48,6 +51,16 @@ public class Reisplanner extends JPanel implements ActionListener
     @Override
     public void actionPerformed(ActionEvent e) {
         zoeken.setText("test");
+    }
+
+    private String getSelectedButton() {
+        for (Enumeration<AbstractButton> buttons = group.getElements(); buttons.hasMoreElements();) {
+            AbstractButton button = buttons.nextElement();
+            if (button.isSelected()) {
+                return button.getText();
+            }
+        }
+        return null;
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -134,7 +147,6 @@ public class Reisplanner extends JPanel implements ActionListener
             ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
             // makes sure that one of the buttons can be selected
-            ButtonGroup group = new ButtonGroup();
             group.add(train);
             group.add(Bus);
             group.add(Tram);
@@ -160,10 +172,99 @@ public class Reisplanner extends JPanel implements ActionListener
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+//        private void printTrips(){
+////
+////            String arrivalSearch = (String)aankomstBox.getSelectedItem();
+////            String departureSearch = (String)vertrekBox.getSelectedItem();
+////
+////            SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+////            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm");
+////            departureTimeSearch = sdf.format(timeSpinner.getValue());
+////            LocalTime localTimeD = LocalTime.parse(departureTimeSearch);
+////
+////            if(getSelectedButton().equals(bundle.getString("trein"))){
+////                Trips trips = trainData.getTrips(departureSearch, arrivalSearch, localTimeD);
+////                ArrayList<Trip> tripArrayList = trips.getTrips();
+////
+////                for (Trip t :tripArrayList){
+////                    var tripButton = new JButton();
+////                    tripButton.setText(t.getRoute().getEndPoint()+" "+t.getDeparture()+"");
+////                    tripButton.setPreferredSize(new Dimension(235,20));
+////                    tripsPanel.add(tripButton);
+////                    tripsPanel.setBackground(Color.GREEN);
+////                    tripsPanel.setVisible(true);
+////                }
+////
+////                if (tripArrayList.size()==0){
+////                    var tripButton = new JButton();
+////                    tripButton.setText("Geen reis mogelijk");
+////                    tripButton.setPreferredSize(new Dimension(235,20));
+////                    tripsPanel.add(tripButton);
+////                }
+////
+////            }
+////
+////            if(getSelectedButton().equals(bundle.getString("bus"))){
+////                Trips trips = busData.getTrips(departureSearch, arrivalSearch, localTimeD);
+////                ArrayList<Trip> tripArrayList = trips.getTrips();
+////
+////                for (Trip t :tripArrayList){
+////                    var tripButton = new JButton();
+////                    tripButton.setText(t.getRoute().getEndPoint()+" "+t.getDeparture()+"");
+////                    tripButton.setPreferredSize(new Dimension(235,20));
+////                    tripsPanel.add(tripButton);
+////                    tripsPanel.setBackground(Color.GREEN);
+////                    tripsPanel.setVisible(true);
+////                }
+////
+////                if (tripArrayList.size()==0){
+////                    var tripButton = new JButton();
+////                    tripButton.setText("Geen reis mogelijk");
+////                    tripButton.setPreferredSize(new Dimension(235,20));
+////                    tripsPanel.add(tripButton);
+////                }
+////
+////            }
+////
+//////                if(getSelectedButton().equals(bundle.getString("tram"))){
+//////                    Trips trips = tramData.getTrips(departureSearch, arrivalSearch, localTimeD);
+//////                    ArrayList<Trip> tripArrayList = trips.getTrips();
+//////
+//////                    for (Trip t :tripArrayList){
+//////                        var tripButton = new JButton();
+//////                        tripButton.setText(t.getRoute().getEndPoint()+" "+t.getDeparture()+"");
+//////                        tripButton.setPreferredSize(new Dimension(235,20));
+//////                        tripsPanel.add(tripButton);
+//////                        tripsPanel.setBackground(Color.GREEN);
+//////                        tripsPanel.setVisible(true);
+//////                    }
+//////
+//////                    if (tripArrayList.size()==0){
+//////                        var tripButton = new JButton();
+//////                        tripButton.setText("Geen reis mogelijk");
+//////                        tripButton.setPreferredSize(new Dimension(235,20));
+//////                        tripsPanel.add(tripButton);
+//////                    }
+//////
+//////                }
+////
+////            else(){
+////                JLabel selectTransport = new JLabel();
+////                selectTransport.setText(bundle.getString("Selecteer een vervoersmiddel"));
+////            }
+//        }
+
+
         // Zorgt ervoor dat er een response komt als de zoek button ingedrukt wordt.
         zoeken.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent search) {
+
+                remove(scrollPane);
+                remove(tripsPanel);
+                tripsPanel = new JPanel();
+                tripsPanel.setLayout(new GridLayout(0,1));
+
                 String arrivalSearch = (String)aankomstBox.getSelectedItem();
                 String departureSearch = (String)vertrekBox.getSelectedItem();
 
@@ -172,31 +273,80 @@ public class Reisplanner extends JPanel implements ActionListener
                 departureTimeSearch = sdf.format(timeSpinner.getValue());
                 LocalTime localTimeD = LocalTime.parse(departureTimeSearch);
 
-                Trips trips = data.getTrips(departureSearch, arrivalSearch, localTimeD);
-                ArrayList<Trip> tripArrayList = trips.getTrips();
 
-//                reisAdvies.setText(bundle.getString("wiltReizenNaar")+ " " + arrivalSearch + " " + bundle.getString("vanuit") + " " + departureSearch + " " + bundle.getString("rondTijd") + " " + departureTimeSearch);
+                if(getSelectedButton().equals(bundle.getString("trein"))){
+                    Trips trips = trainData.getTrips(departureSearch, arrivalSearch, localTimeD);
+                    ArrayList<Trip> tripArrayList = trips.getTrips();
 
-                remove(scrollPane);
-                remove(tripsPanel);
-                tripsPanel = new JPanel();
-                tripsPanel.setLayout(new GridLayout(0,1));
+                    for (Trip t :tripArrayList){
+                        var tripButton = new JButton();
+                        tripButton.setText(t.getRoute().getEndPoint()+" "+t.getDeparture()+"");
+                        tripButton.setPreferredSize(new Dimension(235,20));
+                        tripsPanel.add(tripButton);
+                        tripsPanel.setBackground(Color.GREEN);
+                        tripsPanel.setVisible(true);
+                    }
 
-                for (Trip t :tripArrayList){
-                    var tripButton = new JButton();
-                    tripButton.setText(t.getRoute().getEndPoint()+" "+t.getDeparture()+"");
-                    tripButton.setPreferredSize(new Dimension(235,20));
-                    tripsPanel.add(tripButton);
-                    tripsPanel.setBackground(Color.GREEN);
-                    tripsPanel.setVisible(true);
+                    if (tripArrayList.size()==0){
+                        var tripButton = new JButton();
+                        tripButton.setText("Geen reis mogelijk");
+                        tripButton.setPreferredSize(new Dimension(235,20));
+                        tripsPanel.add(tripButton);
+                    }
 
                 }
-                if (tripArrayList.size()==0){
-                    var tripButton = new JButton();
-                    tripButton.setText("Geen reis mogelijk");
-                    tripButton.setPreferredSize(new Dimension(235,20));
-                    tripsPanel.add(tripButton);
+
+//                if(getSelectedButton().equals(bundle.getString("bus"))){
+//                    Trips trips = busData.getTrips(departureSearch, arrivalSearch, localTimeD);
+//                    ArrayList<Trip> tripArrayList = trips.getTrips();
+//
+//                    for (Trip t :tripArrayList){
+//                        var tripButton = new JButton();
+//                        tripButton.setText(t.getRoute().getEndPoint()+" "+t.getDeparture()+"");
+//                        tripButton.setPreferredSize(new Dimension(235,20));
+//                        tripsPanel.add(tripButton);
+//                        tripsPanel.setBackground(Color.GREEN);
+//                        tripsPanel.setVisible(true);
+//                    }
+//
+//                    if (tripArrayList.size()==0){
+//                        var tripButton = new JButton();
+//                        tripButton.setText("Geen reis mogelijk");
+//                        tripButton.setPreferredSize(new Dimension(235,20));
+//                        tripsPanel.add(tripButton);
+//                    }
+//
+//                }
+
+//                if(getSelectedButton().equals(bundle.getString("tram"))){
+//                    Trips trips = tramData.getTrips(departureSearch, arrivalSearch, localTimeD);
+//                    ArrayList<Trip> tripArrayList = trips.getTrips();
+//
+//                    for (Trip t :tripArrayList){
+//                        var tripButton = new JButton();
+//                        tripButton.setText(t.getRoute().getEndPoint()+" "+t.getDeparture()+"");
+//                        tripButton.setPreferredSize(new Dimension(235,20));
+//                        tripsPanel.add(tripButton);
+//                        tripsPanel.setBackground(Color.GREEN);
+//                        tripsPanel.setVisible(true);
+//                    }
+//
+//                    if (tripArrayList.size()==0){
+//                        var tripButton = new JButton();
+//                        tripButton.setText("Geen reis mogelijk");
+//                        tripButton.setPreferredSize(new Dimension(235,20));
+//                        tripsPanel.add(tripButton);
+//                    }
+//
+//                }
+
+                else{
+                    JLabel selectTransport = new JLabel();
+                    selectTransport.setText(bundle.getString("Selecteer een vervoersmiddel"));
+                    selectTransport.setBounds(300, 300, 100, 50);
+                    add(selectTransport);
                 }
+
                 JPanel container = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
                 container.add(tripsPanel);
                 scrollPane = new JScrollPane(container);
